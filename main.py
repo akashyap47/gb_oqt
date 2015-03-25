@@ -286,7 +286,8 @@ def get_quiz_data():
 	  answer choices),
 	- and the order of these questions.
 	"""
-	for domain in 
+	for domain in DOMAINS:
+	# For each domain, 
 	survey_question_ids = list(SURVEYS[survey_num])
 	random.shuffle(survey_question_ids)
 	survey_question_ids.insert(6, 645)
