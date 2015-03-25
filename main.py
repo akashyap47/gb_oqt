@@ -7,7 +7,8 @@ from flask import abort, Flask, jsonify, redirect, render_template, request, ses
 from flask.ext.cors import cross_origin
 from flask.ext.sqlalchemy import SQLAlchemy
 
-from consts import SECRET_KEY, ISO_CODE_TO_COUNTRY_NAME, STRINGS_D, STORIES, SURVEYS, QUESTIONS
+from aux import SECRET_KEY
+from consts import DOMAINS, ISO_CODE_TO_COUNTRY_NAME, STRINGS_D, STORIES, SURVEYS, QUESTIONS
 
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
