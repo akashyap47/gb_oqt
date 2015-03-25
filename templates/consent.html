@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>{{ strings_d["World News Quiz"][lang] }} | {{ strings_d["Consent"][lang] }}</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/splash.css') }}">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div id="consent_instructions_lay">
+    {{ strings_d["We'd like to use data from the quiz as part of a study on people's perspectives on the news."][lang] }} {{ strings_d["Are you okay with that?"][lang] }}
+    </div>
+    <br>
+    <div id="consent_instructions_formal">
+    {{ strings_d["More formally:"][lang] }} {{ strings_d['By taking this survey you are agreeing to let researchers at the Massachusetts Institute of Technology use the data for an ongoing study of perspectives on news. Participation is voluntary. You may decline to answer any or all questions, and you may decline further participation, at any time, without adverse consequences. Your confidentiality and anonymity are assured.'][lang] }}
+    </div>
+    <br>
+    <div id="contact_info">
+    {{ strings_d['If you have any questions about the study, please email Anu Kashyap at akashyap@mit.edu and Erhardt Graeff at erhardt@media.mit.edu. Additionally, if you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, MIT, Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, Phone 1-617-253-6787.'][lang] }}
+    </div>
+    <br>
+    <form id='consent_form' action='/set_consent/' method='POST'>
+      <input type='radio' name='consent' value='agree'> {{ strings_d["I'm okay with that."][lang] }} {{ strings_d["Let's continue!"][lang] }}
+      <br>
+      <input type='radio' name='consent' value='disagree'> {{ strings_d["I'm not okay with that."][lang] }}
+      <br>
+      <br>
+      <input type='submit' value="{{ strings_d["Next"][lang] }}">
+    </form>
+  </body>
+</html>

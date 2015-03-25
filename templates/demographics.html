@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ strings_d["World News Quiz"][lang] }} | {{ strings_d["Basic Information"][lang] }}</title>
+</head>
+
+<body>
+	<div id='basic_info_instructions'>
+		{{ strings_d["One last thing:"][lang] }} {{ strings_d["Help us out by telling us a bit about yourself."][lang] }}
+	</div>
+	<br>
+	<form id='demographics_form' action='/set_demographics/' method='POST'>
+		<div id='age_form'>
+		1. {{ strings_d["Age (in years)"][lang] }}:
+			<select name='age' form='demographics_form'>
+				<option selected='selected' value='na'>{{ strings_d["Do not wish to reveal"][lang] }}</option>
+				<option value='1-4'>{{ strings_d["1-4"][lang] }}</option>
+				<option value='5-9'>{{ strings_d["5-9"][lang] }}</option>
+				<option value='10-14'>{{ strings_d["10-14"][lang] }}</option>
+				<option value='15-19'>{{ strings_d["15-19"][lang] }}</option>
+				<option value='20-24'>{{ strings_d["20-24"][lang] }}</option>
+				<option value='25-29'>{{ strings_d["25-29"][lang] }}</option>
+				<option value='30-34'>{{ strings_d["30-34"][lang] }}</option>
+				<option value='35-39'>{{ strings_d["35-39"][lang] }}</option>
+				<option value='40-44'>{{ strings_d["40-44"][lang] }}</option>
+				<option value='45-49'>{{ strings_d["45-49"][lang] }}</option>
+				<option value='50-54'>{{ strings_d["50-54"][lang] }}</option>
+				<option value='55-59'>{{ strings_d["55-59"][lang] }}</option>
+				<option value='60-64'>{{ strings_d["60-64"][lang] }}</option>
+				<option value='65-69'>{{ strings_d["65-69"][lang] }}</option>
+				<option value='70-74'>{{ strings_d["70-74"][lang] }}</option>
+				<option value='75-79'>{{ strings_d["75-79"][lang] }}</option>
+				<option value='80-84'>{{ strings_d["80-84"][lang] }}</option>
+				<option value='85+'>{{ strings_d["85+"][lang] }}</option>
+			</select>
+		</div>
+		<br>
+		<div id='gender_form'>
+		2. {{ strings_d["Gender"][lang] }}:
+			<select name='gender' form='demographics_form'>
+				<option selected='selected' value='na'>{{ strings_d["Do not wish to reveal"][lang] }}</option>
+				<option value='f'>{{ strings_d["Female"][lang] }}</option>
+				<option value='m'>{{ strings_d["Male"][lang] }}</option>
+				<option value='other'>{{ strings_d["Other"][lang] }}</option>
+			</select>
+		</div>
+		<br>
+		<div id='education_form'>
+		3. {{ strings_d["Highest Education Completed"][lang] }}:
+			<select name='education' form='demographics_form'>
+				<option selected='selected' value='na'>{{ strings_d["Do not wish to reveal"][lang] }}</option>
+				<option value='hs_incomplete'>{{ strings_d["Did not complete high school"][lang] }}</option>
+				<option value='hs_complete'>{{ strings_d["High school diploma"][lang] }}</option>
+				<option value='vocational_degree'>{{ strings_d["Vocational degree"][lang] }}</option>
+				<option value='two_yr_grad_degree'>{{ strings_d["Two-year college/university degree"][lang] }}</option>
+				<option value='four_yr_grad_degree'>{{ strings_d["Four-year college/university degree"][lang] }}</option>
+				<option value='postgrad_degree'>{{ strings_d["Post-graduate degree"][lang] }}</option>
+			</select>
+		</div>
+		<br>
+		<div id='country_origin_form'>
+		4. {{ strings_d["Country of Origin"][lang] }}:
+			<select name='country_origin' form='demographics_form'>
+				<option selected='selected' value='na'>{{ strings_d["Do not wish to reveal"][lang] }}</option>
+				<option value='bgd'>{{ strings_d["Bangladesh"][lang] }}</option>
+				<option value='bra'>{{ strings_d["Brazil"][lang] }}</option>
+				<option value='chn'>{{ strings_d["China"][lang] }}</option>
+				<option value='cod'>{{ strings_d["Democratic Republic of the Congo"][lang] }}</option>
+				<option value='egy'>{{ strings_d["Egypt"][lang] }}</option>
+				<option value='eth'>{{ strings_d["Ethiopia"][lang] }}</option>
+				<option value='deu'>{{ strings_d["Germany"][lang] }}</option>
+				<option value='ind'>{{ strings_d["India"][lang] }}</option>
+				<option value='idn'>{{ strings_d["Indonesia"][lang] }}</option>
+				<option value='irn'>{{ strings_d["Iran"][lang] }}</option>
+				<option value='jpn'>{{ strings_d["Japan"][lang] }}</option>
+				<option value='mex'>{{ strings_d["Mexico"][lang] }}</option>
+				<option value='nga'>{{ strings_d["Nigeria"][lang] }}</option>
+				<option value='pak'>{{ strings_d["Pakistan"][lang] }}</option>
+				<option value='phl'>{{ strings_d["Philippines"][lang] }}</option>
+				<option value='rus'>{{ strings_d["Russia"][lang] }}</option>
+				<option value='tha'>{{ strings_d["Thailand"][lang] }}</option>
+				<option value='tur'>{{ strings_d["Turkey"][lang] }}</option>
+				<option value='usa'>{{ strings_d["United States of America"][lang] }}</option>
+				<option value='vnm'>{{ strings_d["Vietnam"][lang] }}</option>
+				<option value='other'>{{ strings_d["Other"][lang] }}</option>
+			</select>
+		</div>
+		<br>
+		<div id='country_residence_form'>
+		5. {{ strings_d["Country of Residence"][lang] }}:
+			<select name='country_residence' form='demographics_form'>
+				<option selected='selected' value='na'>{{ strings_d["Do not wish to reveal"][lang] }}</option>
+				<option value='chn'>{{ strings_d["China"][lang] }}</option>
+				<option value='usa'>{{ strings_d["United States of America"][lang] }}</option>
+				<option value='other'>{{ strings_d["Other"][lang] }}</option>
+			</select>
+		</div>
+		<br>
+		<div id='native_lang_form'>
+		6. {{ strings_d["Native Language"][lang] }}:
+			<select name='native_lang' form='demographics_form'>>
+				<option selected='selected' value='na'>{{ strings_d["Do not wish to reveal"][lang] }}</option>
+				<option value='chn'>{{ strings_d["Chinese"][lang] }}</option>
+				<option value='en'>{{ strings_d["English"][lang] }}</option>
+				<option value='other'>{{ strings_d["Other"][lang] }}</option>
+			</select>
+		</div>
+		<br>
+		<input type='submit' value='{{ strings_d["Start the quiz!"][lang] }}'>
+	</form>
+</body>
+
+</html>
