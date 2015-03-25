@@ -1,5 +1,3 @@
-SECRET_KEY = "NTNCDWZZ1G4RWXDL71HBVCUPB55JF2XUWUN0HR3AX2G5UADPG32OEBSJE885X0WL"
-
 ISO_CODE_TO_COUNTRY_NAME = {
 	'bgd': 'Bangladesh',
 	'bra': 'Brazil',
@@ -23,7 +21,7 @@ ISO_CODE_TO_COUNTRY_NAME = {
 	'vnm': 'Vietnam',
 }
 
-DOMAIN_KEYS = ['S&T', 'NS', 'IR', 'H&M', 'G&P', 'E&E', 'EDU', 'E&B', 'C&L', 'CR&F']
+DOMAINS = ['S&T', 'NS', 'IR', 'H&M', 'G&P', 'E&E', 'EDU', 'E&B', 'C&L', 'CR&F']
 
 STRINGS_D = {'1-4': {'chn': u'1-4\u5c81', 'en': '1-4'},
  '1) Visit the following link: cryptic-brook-5843.herokuapp.com/en': {'chn': u'1) \u8bbf\u95ee\u4e0b\u9762\u7684\u94fe\u63a5\uff1acryptic-brook-5843.herokuapp.com/en',
