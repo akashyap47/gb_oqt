@@ -153,109 +153,110 @@ def set_demographics():
 		print 'Unexpected error:'
 		traceback.print_exc()
 
-# @app.route('/handle_survey', methods=['POST'])
-# def handle_survey():
-# 	if ('demographics_complete' not in session or 'survey_submitted' in session): abort(403)
-# 	form_data = request.form
-# 	question_ids = request.form.keys()
-# 	survey_id = None
-# 	confirmation_code = None
-# 	try:
-# 		confirmation_code = gen_rand_code()
-# 		survey = Survey(session['consent'], session['age'], session['gender'], session['education'],
-# 						session['country_origin'], session['country_residence'], session['native_lang'],
-# 						confirmation_code)
-# 		if len(question_ids) >= 1:
-# 			survey.q1 = int(question_ids[0])
-# 			survey.q1_ans = form_data[question_ids[0]]
-# 		if len(question_ids) >= 2:
-# 			survey.q2 = int(question_ids[1])
-# 			survey.q2_ans = form_data[question_ids[1]]
-# 		if len(question_ids) >= 3:
-# 			survey.q3 = int(question_ids[2])
-# 			survey.q3_ans = form_data[question_ids[2]]
-# 		if len(question_ids) >= 4:
-# 			survey.q4 = int(question_ids[3])
-# 			survey.q4_ans = form_data[question_ids[3]]
-# 		if len(question_ids) >= 5:
-# 			survey.q5 = int(question_ids[4])
-# 			survey.q5_ans = form_data[question_ids[4]]
-# 		if len(question_ids) >= 6:
-# 			survey.q6 = int(question_ids[5])
-# 			survey.q6_ans = form_data[question_ids[5]]
-# 		if len(question_ids) >= 7:
-# 			survey.q7 = int(question_ids[6])
-# 			survey.q7_ans = form_data[question_ids[6]]
-# 		if len(question_ids) >= 8:
-# 			survey.q8 = int(question_ids[7])
-# 			survey.q8_ans = form_data[question_ids[7]]
-# 		if len(question_ids) >= 9:
-# 			survey.q9 = int(question_ids[8])
-# 			survey.q9_ans = form_data[question_ids[8]]
-# 		if len(question_ids) >= 10:
-# 			survey.q10 = int(question_ids[9])
-# 			survey.q10_ans = form_data[question_ids[9]]
-# 		if len(question_ids) >= 11:
-# 			survey.q11 = int(question_ids[10])
-# 			survey.q11_ans = form_data[question_ids[10]]
-# 		if len(question_ids) >= 12:
-# 			survey.q12 = int(question_ids[11])
-# 			survey.q12_ans = form_data[question_ids[11]]
-# 		if len(question_ids) >= 13:
-# 			survey.q13 = int(question_ids[12])
-# 			survey.q13_ans = form_data[question_ids[12]]
-# 		if len(question_ids) >= 14:
-# 			survey.q14 = int(question_ids[13])
-# 			survey.q14_ans = form_data[question_ids[13]]
-# 		if len(question_ids) >= 15:
-# 			survey.q15 = int(question_ids[14])
-# 			survey.q15_ans = form_data[question_ids[14]]
-# 		if len(question_ids) >= 16:
-# 			survey.q16 = int(question_ids[15])
-# 			survey.q16_ans = form_data[question_ids[15]]
-# 		if len(question_ids) >= 17:
-# 			survey.q17 = int(question_ids[16])
-# 			survey.q17_ans = form_data[question_ids[16]]
-# 		if len(question_ids) >= 18:
-# 			survey.q18 = int(question_ids[17])
-# 			survey.q18_ans = form_data[question_ids[17]]
-# 		if len(question_ids) >= 19:
-# 			survey.q19 = int(question_ids[18])
-# 			survey.q19_ans = form_data[question_ids[18]]
-# 		if len(question_ids) >= 20:
-# 			survey.q20 = int(question_ids[19])
-# 			survey.q20_ans = form_data[question_ids[19]]
-# 		if len(question_ids) >= 21:
-# 			survey.q21 = int(question_ids[20])
-# 			survey.q21_ans = form_data[question_ids[20]]
-# 		if len(question_ids) >= 22:
-# 			survey.q22 = int(question_ids[21])
-# 			survey.q22_ans = form_data[question_ids[21]]
-# 		if len(question_ids) >= 23:
-# 			survey.q22 = int(question_ids[22])
-# 			survey.q22_ans = form_data[question_ids[22]]
-# 		db.session.add(survey)
-# 		db.session.commit()
-# 		survey_id = survey.id
-# 		session['survey_submitted'] = True
-# 	except:
-# 		print 'Unexpected error:'
-# 		traceback.print_exc()
-# 	if not survey_id or not confirmation_code:
-# 		try:
-# 			return render_template('error.html', lang=session['lang'],
-# 												 strings_d=STRINGS_D)
-# 		except:
-# 			print 'Unexpected error:'
-# 			traceback.print_exc()
-# 	else:
-# 		try:
-# 			return render_template('confirmation.html', confirmation_code=str(survey_id)+';'+confirmation_code,
-# 														lang=session['lang'],
-# 														strings_d=STRINGS_D)
-# 		except:
-# 			print 'Unexpected error:'
-# 			traceback.print_exc()
+@app.route('/submit_quiz/', methods=['POST'])
+def submit_quiz():
+	if 'demographics_complete' not in session or 'quiz_submitted' in session:
+	# User hasn't completed the tool's demographics section, or the user has already
+	# submitted a quiz instance.
+		abort(403)
+
+	form_data = request.form
+	question_ids = request.form.keys()
+	survey_id = None
+	confirmation_code = None
+	try:
+		confirmation_code = gen_rand_code()
+		survey = Survey(session['consent'], session['age'], session['gender'], session['education'],
+						session['country_origin'], session['country_residence'], session['native_lang'],
+						confirmation_code)
+		if len(question_ids) >= 1:
+			survey.q1 = int(question_ids[0])
+			survey.q1_ans = form_data[question_ids[0]]
+		if len(question_ids) >= 2:
+			survey.q2 = int(question_ids[1])
+			survey.q2_ans = form_data[question_ids[1]]
+		if len(question_ids) >= 3:
+			survey.q3 = int(question_ids[2])
+			survey.q3_ans = form_data[question_ids[2]]
+		if len(question_ids) >= 4:
+			survey.q4 = int(question_ids[3])
+			survey.q4_ans = form_data[question_ids[3]]
+		if len(question_ids) >= 5:
+			survey.q5 = int(question_ids[4])
+			survey.q5_ans = form_data[question_ids[4]]
+		if len(question_ids) >= 6:
+			survey.q6 = int(question_ids[5])
+			survey.q6_ans = form_data[question_ids[5]]
+		if len(question_ids) >= 7:
+			survey.q7 = int(question_ids[6])
+			survey.q7_ans = form_data[question_ids[6]]
+		if len(question_ids) >= 8:
+			survey.q8 = int(question_ids[7])
+			survey.q8_ans = form_data[question_ids[7]]
+		if len(question_ids) >= 9:
+			survey.q9 = int(question_ids[8])
+			survey.q9_ans = form_data[question_ids[8]]
+		if len(question_ids) >= 10:
+			survey.q10 = int(question_ids[9])
+			survey.q10_ans = form_data[question_ids[9]]
+		if len(question_ids) >= 11:
+			survey.q11 = int(question_ids[10])
+			survey.q11_ans = form_data[question_ids[10]]
+		if len(question_ids) >= 12:
+			survey.q12 = int(question_ids[11])
+			survey.q12_ans = form_data[question_ids[11]]
+		if len(question_ids) >= 13:
+			survey.q13 = int(question_ids[12])
+			survey.q13_ans = form_data[question_ids[12]]
+		if len(question_ids) >= 14:
+			survey.q14 = int(question_ids[13])
+			survey.q14_ans = form_data[question_ids[13]]
+		if len(question_ids) >= 15:
+			survey.q15 = int(question_ids[14])
+			survey.q15_ans = form_data[question_ids[14]]
+		if len(question_ids) >= 16:
+			survey.q16 = int(question_ids[15])
+			survey.q16_ans = form_data[question_ids[15]]
+		if len(question_ids) >= 17:
+			survey.q17 = int(question_ids[16])
+			survey.q17_ans = form_data[question_ids[16]]
+		if len(question_ids) >= 18:
+			survey.q18 = int(question_ids[17])
+			survey.q18_ans = form_data[question_ids[17]]
+		if len(question_ids) >= 19:
+			survey.q19 = int(question_ids[18])
+			survey.q19_ans = form_data[question_ids[18]]
+		if len(question_ids) >= 20:
+			survey.q20 = int(question_ids[19])
+			survey.q20_ans = form_data[question_ids[19]]
+		if len(question_ids) >= 21:
+			survey.q21 = int(question_ids[20])
+			survey.q21_ans = form_data[question_ids[20]]
+		if len(question_ids) >= 22:
+			survey.q22 = int(question_ids[21])
+			survey.q22_ans = form_data[question_ids[21]]
+		db.session.add(survey)
+		db.session.commit()
+		survey_id = survey.id
+		session['survey_submitted'] = True
+	except:
+		print 'Unexpected error:'
+		traceback.print_exc()
+	if not survey_id or not confirmation_code:
+		try:
+			return render_template('error.html', lang=session['lang'],
+												 strings_d=STRINGS_D)
+		except:
+			print 'Unexpected error:'
+			traceback.print_exc()
+	else:
+		try:
+			return render_template('confirmation.html', confirmation_code=str(survey_id)+';'+confirmation_code,
+														lang=session['lang'],
+														strings_d=STRINGS_D)
+		except:
+			print 'Unexpected error:'
+			traceback.print_exc()
 
 # @app.route('/validate_survey_completion', methods=['POST'])
 # @cross_origin()
@@ -277,15 +278,15 @@ def set_demographics():
 # 	else:
 # 		return jsonify({'success': False})
 
-def get_survey_data():
+def get_quiz_data():
 	"""
-	Returns a dict whose data characterizes a new survey instance.
+	Returns a dict whose data characterizes a new quiz instance.
 	Such data exactly includes:
-	- the order of 
-	- 
-	- 
-	- 
+	- the set of questions (where each question is a news story + a set of
+	  answer choices),
+	- and the order of these questions.
 	"""
+	for domain in 
 	survey_question_ids = list(SURVEYS[survey_num])
 	random.shuffle(survey_question_ids)
 	survey_question_ids.insert(6, 645)
