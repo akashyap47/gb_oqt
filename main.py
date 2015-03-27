@@ -92,20 +92,22 @@ app.secret_key = SECRET_KEY
 def main():
 	return render_template("index.html")
 
-# @app.route("/set_lang/", methods=["POST"])
-# def set_lang():
-# 	if "lang" not in request.form or (request.form["lang"] != "en" and request.form["lang"] != "chn"):
-# 		abort(403)
-# 	session["lang"] = request.form["lang"]
-# 	return redirect(url_for("get_consent"))
+@app.route("/set_lang/", methods=["POST"])
+def set_lang():
+	req_data = request.get_json()
+	if "lang" not in req_data or (req_data["lang"] != "en" and req_data["lang"] != "chn"):
+		abort(403)
+	session["lang"] = req_data["lang"]
+	return jsonify({"success": True})
 
-# @app.route("/consent/", methods=["GET"])
-# def get_consent():
-# 	if "lang" not in session:
-# 		return redirect(url_for("main"))
-# 	return render_template("consent.html", lang=session["lang"],
-# 										   strings_d=STRINGS_D)
-
+"""
+@app.route("/consent/", methods=["GET"])
+def get_consent():
+	if "lang" not in session:
+		return redirect(url_for("main"))
+	return render_template("consent.html", lang=session["lang"],
+										   strings_d=STRINGS_D)
+"""
 # @app.route("/set_consent/", methods=["POST"])
 # def set_consent():
 # 	if "lang" not in session or "consent" not in request.form or (request.form["consent"] != "agree" and request.form["consent"] != "disagree"):

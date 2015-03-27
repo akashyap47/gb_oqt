@@ -9,62 +9,62 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+		<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 	</head>
 	<body>
-		<div class="container-fluid" id="splash">
-			<div class="row" id="splash-hook1-row">
-				<div class="col-sm-1"></div>
-				<div class="col-sm-4 splash-hook1" id="splash-hook1-en">
-					Think you know what's going on around the <text>world</text>?
+		<div ng-app="gbOqtApp">
+			<div class="container-fluid" id="splash">
+				<div class="row" id="splash-hook1-row">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-4 splash-hook1" id="splash-hook1-en">
+						Think you know what's going on around the <text>world</text>?
+					</div>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-4 splash-hook1" id="splash-hook1-chn">
+						想你知道发生了什么事情在<text>世界</text>各地?
+					</div>
+					<div class="col-sm-1"></div>
 				</div>
-				<div class="col-sm-2"></div>
-				<div class="col-sm-4 splash-hook1" id="splash-hook1-chn">
-					想你知道发生了什么事情在<text>世界</text>各地?
+				<div class="row" id="splash-hook2-row">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-4 splash-hook2" id="splash-hook2-en">
+						Test your knowledge with a quiz developed at MIT!
+					</div>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-4 splash-hook2" id="splash-hook2-chn">
+						与在麻省理工学院开发的测验测试你的知识!
+					</div>
+					<div class="col-sm-1"></div>
 				</div>
-				<div class="col-sm-1"></div>
+				<div class="row" id="get-lang-row">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-4 get-lang-text" id="get-lang-text-en">
+						But first, are you a native English speaker?
+					</div>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-4 get-lang-text" id="get-lang-text-chn">
+						但首先，你的母语是英语?
+					</div>
+					<div class="col-sm-1"></div>
+				</div>
+				<div ng-controller="LangCtrl">
+					<div class="row" id="lang-form-row">
+						<div class="col-sm-1"></div>
+						<div class="col-sm-4 lang-form" id="lang-form-en">
+					        <input ng-click="setLang('en')" class="btn btn-default btn-submit" style="outline-color: #9245AB;" type="submit" value="Yes, I am!" />
+						</div>
+						<div class="col-sm-2"></div>
+						<div class="col-sm-4 lang-form" id="lang-form-chn">
+					        <input ng-click="setLang('chn')" class="btn btn-default btn-submit" style="outline-color: #9245AB;" type="submit" value="我是!" />
+						</div>
+						<div class="col-sm-1"></div>
+					</div>
+				</div>
 			</div>
-			<div class="row" id="splash-hook2-row">
-				<div class="col-sm-1"></div>
-				<div class="col-sm-4 splash-hook2" id="splash-hook2-en">
-					Test your knowledge with a quiz developed at MIT!
-				</div>
-				<div class="col-sm-2"></div>
-				<div class="col-sm-4 splash-hook2" id="splash-hook2-chn">
-					与在麻省理工学院开发的测验测试你的知识!
-				</div>
-				<div class="col-sm-1"></div>
+			<div id="footer">
+			By the Center for Civic Media @ MIT Media Lab, 2015.
 			</div>
-			<div class="row" id="get-lang-row">
-				<div class="col-sm-1"></div>
-				<div class="col-sm-4 get-lang-text" id="get-lang-text-en">
-					But first, are you a native English speaker?
-				</div>
-				<div class="col-sm-2"></div>
-				<div class="col-sm-4 get-lang-text" id="get-lang-text-chn">
-					但首先，你的母语是英语?
-				</div>
-				<div class="col-sm-1"></div>
-			</div>
-			<div class="row" id="lang-form-row">
-				<div class="col-sm-1"></div>
-				<div class="col-sm-4 lang-form" id="lang-form-en">
-					<form action="/set_lang/" method="POST">
-				        <input type="hidden" name="lang" value="en" />
-				        <input class="btn btn-default btn-submit" type="submit" value="Yes, I am!" />
-      				</form>
-				</div>
-				<div class="col-sm-2"></div>
-				<div class="col-sm-4 lang-form" id="lang-form-chn">
-					<form action="/set_lang/" method="POST">
-				        <input type="hidden" name="lang" value="chn" />
-				        <input class="btn btn-default btn-submit" type="submit" value="我是!" />
-      				</form>
-				</div>
-				<div class="col-sm-1"></div>
-			</div>
-		</div>
-		<div id="footer">
-		By the Center for Civic Media @ MIT Media Lab, 2015.
 		</div>
 	</body>
 </html>
