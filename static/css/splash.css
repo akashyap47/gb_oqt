@@ -1,4 +1,65 @@
-.splash {
-	display: inline-block;
-	width: 49.5%;
+body {
+	font-family: 'Roboto Slab', serif;
+}
+
+div#splash {
+	display: block;
+	width: 973px;
+	margin-top: 8vh;
+}
+
+div#splash-hook1-row {
+	margin-top: 30px;
+	font-size: 37.5px;
+	line-height: 43.75px;
+	text-align: center;
+}
+
+div#splash-hook1-chn {
+	margin-top: 6.5px;
+}
+
+div#splash-hook2-row {
+	margin-top: 18.75px;
+	font-size: 25px;
+	text-align: center;
+}
+
+div#splash-hook2-chn {
+	margin-top: 2.5px;
+}
+
+div#get-lang-row {
+	margin-top: 18.75px;
+	font-size: 18.75px;
+	text-align: center;
+}
+
+div#get-lang-text-chn {
+	margin-top: 1px;
+}
+
+div#lang-form-row {
+	margin-top: 18.75px;
+}
+
+#lang-form-en.btn-submit {
+	margin-top: 1.875px;
+}
+
+input.btn-submit {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 125px;
+}
+
+div#splash text {
+	color: #9245AB;
+}
+
+div#footer {
+	position: absolute;
+	bottom: 10px;
+	right: 15px;
 }
