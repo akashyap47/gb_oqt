@@ -98,62 +98,89 @@ def set_lang():
 	if "lang" not in req_data or (req_data["lang"] != "en" and req_data["lang"] != "chn"):
 		abort(403)
 	session["lang"] = req_data["lang"]
-	return jsonify({"success": True})
+	return redirect(url_for("get_consent"))
+	#return jsonify({"success": True})
 
-"""
-@app.route("/consent/", methods=["GET"])
+@app.route("/get_consent/", methods=["GET"])
 def get_consent():
 	if "lang" not in session:
 		return redirect(url_for("main"))
 	return render_template("consent.html", lang=session["lang"],
 										   strings_d=STRINGS_D)
-"""
-# @app.route("/set_consent/", methods=["POST"])
-# def set_consent():
-# 	if "lang" not in session or "consent" not in request.form or (request.form["consent"] != "agree" and request.form["consent"] != "disagree"):
-# 		abort(403)
-# 	if request.form["consent"] == "agree":
-# 		session["consent"] = True
-# 		return redirect(url_for("get_demographics"))
-# 	else:
-# 		session["consent"] = False
-# 		return redirect(url_for("no_consent"))
 
-# @app.route("/get_demographics", methods=["GET"])
-# def get_demographics():
-# 	if "lang" not in session:
-# 		return redirect(url_for("main"))
-# 	elif "consent" not in session:
-# 		return redirect(url_for("get_demographics"))
-# 	elif session["consent"] == False:
-# 		return redirect(url_for("no_consent"))
-# 	return render_template("demographics.html", lang=session["lang"],
-# 												strings_d=STRINGS_D)
+@app.route("/set_consent/", methods=["POST"])
+def set_consent():
+	req_data = request.get_json()
+	if "lang" not in session or "consent" not in req_data or type(req_data["consent"]) != bool:
+		abort(403)
+	if req_data["consent"]:
+		session["consent"] = True
+		return redirect(url_for("get_demographics"))
+	else:
+		session["consent"] = False
+		return redirect(url_for("get_demographics"))
 
-# @app.route('/set_demographics/', methods=['POST'])
-# def set_demographics():
-# 	if "lang" not in session or "consent" not in session or !session["consent"]:
-# 		abort(403)
-# 	if ('age' not in request.form or 'gender' not in request.form
-# 		or 'education' not in request.form or 'country_origin' not in request.form
-# 		or 'country_residence' not in request.form or 'native_lang' not in request.form):
-# 		abort(403)
-# 	session['age'] = request.form['age']
-# 	session['gender'] = request.form['gender']
-# 	session['education'] = request.form['education']
-# 	session['country_origin'] = request.form['country_origin']
-# 	session['country_residence'] = request.form['country_residence']
-# 	session['native_lang'] = request.form['native_lang']
-# 	session['demographics_complete'] = True
-# 	survey_data = get_survey_data()
-# 	try:
-# 		return render_template('survey.html', survey_data=survey_data,
-# 										  	  code_to_name=ISO_CODE_TO_COUNTRY_NAME,
-# 										  	  lang=session['lang'],
-# 										  	  strings_d=STRINGS_D)
-# 	except:
-# 		print 'Unexpected error:'
-# 		traceback.print_exc()
+@app.route("/no_consent/", methods=["GET"])
+def no_consent():
+	return render_template("no_consent.html", lang=session["lang"],
+											  strings_d=STRINGS_D)
+
+@app.route("/get_demographics/", methods=["GET"])
+def get_demographics():
+	if "lang" not in session:
+		return redirect(url_for("main"))
+	elif "consent" not in session:
+		return redirect(url_for("get_consent"))
+	elif session["consent"] == False:
+		return redirect(url_for("no_consent"))
+	return render_template("demographics.html", lang=session["lang"],
+												strings_d=STRINGS_D)
+
+@app.route('/set_demographics/', methods=['POST'])
+def set_demographics():
+	req_data = request.get_json()
+	print "req_data:", req_data
+	if "consent" not in session or not session["consent"]:
+		abort(403)
+	if ('age' not in req_data or 'gender' not in req_data
+		or 'education' not in req_data or 'country_origin' not in req_data
+		or 'country_residence' not in req_data or 'native_lang' not in req_data):
+		abort(403)
+	session['age'] = req_data['age']
+	session['gender'] = req_data['gender']
+	session['education'] = req_data['education']
+	session['country_origin'] = req_data['country_origin']
+	session['country_residence'] = req_data['country_residence']
+	session['native_lang'] = req_data['native_lang']
+	session['demographics_complete'] = True
+	print "session:", session
+	# return render_template("quiz")
+	# survey_data = get_survey_data()
+	return ""
+	# try:
+	# 	return render_template('survey.html', survey_data=survey_data,
+	# 									  	  code_to_name=ISO_CODE_TO_COUNTRY_NAME,
+	# 									  	  lang=session['lang'],
+	# 									  	  strings_d=STRINGS_D)
+	# except:
+	# 	print 'Unexpected error:'
+	# 	traceback.print_exc()
+
+@app.route("/quiz/", methods=["GET"])
+def get_quiz():
+	if "lang" not in session:
+		return redirect(url_for("main"))
+	elif "consent" not in session:
+		return redirect(url_for("get_consent"))
+	elif session["consent"] == False:
+		return redirect(url_for("no_consent"))
+	elif not session["demographics_complete"]:
+		return redirect(url_for("get_demographics"))
+	survey_data = get_quiz_data()
+	return render_template('survey.html', survey_data=survey_data,
+										  code_to_name=ISO_CODE_TO_COUNTRY_NAME,
+										  lang=session['lang'],
+										  strings_d=STRINGS_D)
 
 # @app.route('/submit_quiz/', methods=['POST'])
 # def submit_quiz():
@@ -280,26 +307,40 @@ def get_consent():
 # # 	else:
 # # 		return jsonify({'success': False})
 
-# def get_quiz_data():
-# 	"""
-# 	Returns a list of dicts, where each dict's data characterizes a quiz question,
-# 	such that the list characterizes a quiz instance where the ith dict in the list
-# 	represents the ith question in the quiz.
+def get_quiz_data():
+	"""
+	Returns a list of dicts, where each dict's data characterizes a quiz question,
+	such that the list characterizes a quiz instance where the ith dict in the list
+	represents the ith question in the quiz.
 
-# 	The data within each dict includes:
-# 	- the id and text of a news story, and
-# 	- a set of exactly four answer choices.
-# 	"""
-# 	quiz_data = []
-# 	for domain in DOMAINS:
-# 	# For each domain, we want 2 questions, each with 0.5-0.5 probability of
-# 	# concerning a positive- or negative-valenced story.
-# 		question_data = {}
-# 		if random() < 0.5:
-# 			# insert positive-valence story about domain into
-# 		else:
-# 			# we're focusing on a negative-valence story about the domain
-# 		# get choices
+	The data within each dict includes:
+	- the id and text of a news story, and
+	- a set of exactly four answer choices.
+	"""
+	survey_data = []
+	for i in xrange(1, 23):
+		survey_datum = {}
+		survey_question_data = dict(QUESTIONS[i])
+		survey_datum['question_id'] = i
+		survey_datum['qid'] = i
+		survey_datum['answer_choices'] = list(survey_question_data['choices'])
+		if session['lang'] == 'en':
+			survey_question_story = STORIES[survey_question_data['story_id']]['english_rewrite']
+		else:
+			survey_question_story = (STORIES[survey_question_data['story_id']]['chinese_rewrite']).decode('UTF-8')
+		survey_datum['story'] = survey_question_story
+		survey_data.append(survey_datum)
+	print 'survey_data:', survey_data
+	return survey_data
+	# for domain in DOMAINS:
+	# For each domain, we want 2 questions, each with 0.5-0.5 probability of
+	# concerning a positive- or negative-valenced story.
+		# question_data = {}
+		# if random() < 0.5:
+			# insert positive-valence story about domain into
+		# else:
+			# we're focusing on a negative-valence story about the domain
+		# get choices
 
 # 			# Add a positive-valence question regarding this domain
 # 			# Add a negative-valence question regarding this domain
@@ -316,10 +357,10 @@ def get_consent():
 # 		survey_question_answer_choices = list(survey_question_data['choices'])
 # 		random.shuffle(survey_question_answer_choices)
 # 		survey_datum['answer_choices'] = survey_question_answer_choices
-# 		if session['lang'] == 'en':
-# 			survey_question_story = STORIES[survey_question_data['story_id']]['english_rewrite']
-# 		else:
-# 			survey_question_story = (STORIES[survey_question_data['story_id']]['chinese_rewrite']).decode('UTF-8')
+		# if session['lang'] == 'en':
+		# 	survey_question_story = STORIES[survey_question_data['story_id']]['english_rewrite']
+		# else:
+		# 	survey_question_story = (STORIES[survey_question_data['story_id']]['chinese_rewrite']).decode('UTF-8')
 # 		survey_datum['story'] = survey_question_story
 
 # 		survey_data.append(survey_datum)

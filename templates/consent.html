@@ -21,27 +21,35 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
   </head>
   <body>
-    <div id="consent_instructions_lay">
-    {{ strings_d["We'd like to use data from the quiz as part of a study on people's perspectives on the news."][lang] }} {{ strings_d["Are you okay with that?"][lang] }}
-    </div>
-    <br>
-    <div id="consent_instructions_formal">
-    {{ strings_d["More formally:"][lang] }} {{ strings_d['By taking this survey you are agreeing to let researchers at the Massachusetts Institute of Technology use the data for an ongoing study of perspectives on news. Participation is voluntary. You may decline to answer any or all questions, and you may decline further participation, at any time, without adverse consequences. Your confidentiality and anonymity are assured.'][lang] }}
-    </div>
-    <br>
-    <div id="contact_info">
-    {{ strings_d['If you have any questions about the study, please email Anu Kashyap at akashyap@mit.edu and Erhardt Graeff at erhardt@media.mit.edu. Additionally, if you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, MIT, Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, Phone 1-617-253-6787.'][lang] }}
-    </div>
-    <br>
-    <form id='consent_form' action='/set_consent/' method='POST'>
-      <input type='radio' name='consent' value='agree'> {{ strings_d["I'm okay with that."][lang] }} {{ strings_d["Let's continue!"][lang] }}
+    <div ng-app="gbOqtApp">
+      <div id="consent_instructions_lay">
+      {{ strings_d["We'd like to use data from the quiz as part of a study on people's perspectives on the news."][lang] }} {{ strings_d["Are you okay with that?"][lang] }}
+      </div>
       <br>
-      <input type='radio' name='consent' value='disagree'> {{ strings_d["I'm not okay with that."][lang] }}
+      <div id="consent_instructions_formal">
+      {{ strings_d["More formally:"][lang] }} {{ strings_d['By taking this survey you are agreeing to let researchers at the Massachusetts Institute of Technology use the data for an ongoing study of perspectives on news. Participation is voluntary. You may decline to answer any or all questions, and you may decline further participation, at any time, without adverse consequences. Your confidentiality and anonymity are assured.'][lang] }}
+      </div>
       <br>
+      <div id="contact_info">
+      {{ strings_d['If you have any questions about the study, please email Anu Kashyap at akashyap@mit.edu and Erhardt Graeff at erhardt@media.mit.edu. Additionally, if you feel you have been treated unfairly, or you have questions regarding your rights as a research subject, you may contact the Chairman of the Committee on the Use of Humans as Experimental Subjects, MIT, Room E25-143B, 77 Massachusetts Ave, Cambridge, MA 02139, Phone 1-617-253-6787.'][lang] }}
+      </div>
       <br>
-      <input type='submit' value="{{ strings_d["Next"][lang] }}">
-    </form>
+      <div ng-controller="ConsentCtrl">
+        <input ng-click="setConsent(false)" class="btn btn-default btn-submit" style="outline-color: #9245AB;" type="submit" value="That's not okay with me" />
+        <input ng-click="setConsent(true)" class="btn btn-default btn-submit" style="outline-color: #9245AB;" type="submit" value="That's okay with me!" />
+      </div>
+      <!--<form id='consent_form' action='/set_consent/' method='POST'>
+        <input type='radio' name='consent' value='agree'> {{ strings_d["I'm okay with that."][lang] }} {{ strings_d["Let's continue!"][lang] }}
+        <br>
+        <input type='radio' name='consent' value='disagree'> {{ strings_d["I'm not okay with that."][lang] }}
+        <br>
+        <br>
+        <input type='submit' value="{{ strings_d["Next"][lang] }}">
+      </form>-->
+    </div>
   </body>
 </html>

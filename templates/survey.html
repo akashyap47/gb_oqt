@@ -11,28 +11,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <title>{{ strings_d["World News Quiz"][lang] }}</title>
 </head>
 <body>
-	<h2 id="quiz_title">{{ strings_d["World News Quiz"][lang] }}</h2>
-	<div id="quiz_instructions">
-		{{ strings_d["In each question below, you"re presented with a news story. Identify the country (from the choices given) that the news story is about."][lang] }}
-	</div>
-	<br>
-	<form id="quiz_form" action="/submit_quiz/" method="POST">
-		{% for survey_datum in survey_data %}
-		<div id={{ (survey_datum["question_id"])|string + "_form"}} form="survey_form">
-			{{ (loop.index)|string + ". " + survey_datum["story"] }}
-			<br>
-			<br>
-				{% for choice in survey_datum["answer_choices"] %}
-					<input type="radio" name={{ (survey_datum["question_id"])|string }} value={{choice}}> {{ strings_d[code_to_name[choice]][lang] }}
-					<br>
-				{% endfor %}
+	<div ng-app="gbOqtApp">
+		<h2 id="quiz_title">{{ strings_d["World News Quiz"][lang] }}</h2>
+		<div id="quiz_instructions">
+			{{ strings_d["In each question below, you're presented with a news story. Identify the country (from the choices given) that the news story is about."][lang] }}
 		</div>
 		<br>
-		{% endfor %}
-		<input type="submit" value="{{ strings_d["Submit"][lang] }}">
-	</form>
+		<div ng-controller="QuizCtrl" id='demographics_form'>
+			<div id="quiz_form">
+				{% for survey_datum in survey_data %}
+				<div>
+					{{ (loop.index)|string + ". " + survey_datum["story"] }}
+					<br>
+					<br>
+						{% for choice in survey_datum["answer_choices"] %}
+							<input type="radio" ng-model={{ "quiz.q" + survey_datum["qid"]|string }} name={{ (survey_datum["question_id"])|string }} value={{choice}}> {{ strings_d[code_to_name[choice]][lang] }}
+							<br>
+						{% endfor %}
+				</div>
+				<br>
+				{% endfor %}
+				<input type="submit" ng-click="submitQuiz()" value="{{ strings_d["Submit"][lang] }}">
+			</div>
+		</div>
+	</div>
 </body>
 </html>
