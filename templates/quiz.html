@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="{{ url_for("static", filename="css/splash.css") }}">-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <title>{{ strings_d["World News Quiz"][lang] }}</title>
+</head>
+<body>
+	<div ng-app="gbOqtApp">
+		<h2 id="quiz_title">{{ strings_d["World News Quiz"][lang] }}</h2>
+		<div id="quiz_instructions">
+			{{ strings_d["In each question below, you're presented with a news story. Identify the country (from the choices given) that the news story is about."][lang] }}
+		</div>
+		<br>
+		<div ng-controller="QuizCtrl" id='quiz_form'>
+			<div id="quiz_form">
+				{% for quiz_datum in quiz_data %}
+				<div>
+					{% set i = loop.index %}
+					{{ (loop.index)|string + ". " + quiz_datum["story"] }}
+					<br>
+					<br>
+						{% for choice in quiz_datum["choices"] %}
+							<input type="radio" ng-model={{ "quiz.q" + (i)|string + "_ans" }} name={{ "q" + (i)|string + "_ans" }} value={{choice}}> {{ strings_d[code_to_name[choice]][lang] }}
+							<br>
+						{% endfor %}
+				</div>
+				<br>
+				{% endfor %}
+				<input type="submit" ng-click="submitQuiz()" value="{{ strings_d["Submit"][lang] }}">
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -39,8 +39,8 @@
       </div>
       <br>
       <div ng-controller="ConsentCtrl">
-        <input ng-click="setConsent(false)" class="btn btn-default btn-submit" style="outline-color: #9245AB;" type="submit" value="That's not okay with me" />
-        <input ng-click="setConsent(true)" class="btn btn-default btn-submit" style="outline-color: #9245AB;" type="submit" value="That's okay with me!" />
+        <input ng-click="setConsent(false)" class="btn btn-default btn-submit" style="outline-color: #9245AB;" type="submit" value="{{ strings_d['That\'s not okay with me'][lang] }}" />
+        <input ng-click="setConsent(true)" class="btn btn-default btn-submit" style="outline-color: #9245AB;" type="submit" value="{{ strings_d['That\'s okay with me!'][lang] }}" />
       </div>
       <!--<form id='consent_form' action='/set_consent/' method='POST'>
         <input type='radio' name='consent' value='agree'> {{ strings_d["I'm okay with that."][lang] }} {{ strings_d["Let's continue!"][lang] }}
